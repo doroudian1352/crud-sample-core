@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Mc2.CrudTest.Domain
 {
-    public class WeatherForecast
+    public class Customer
     {
         public DateTime Date { get; set; }
 
