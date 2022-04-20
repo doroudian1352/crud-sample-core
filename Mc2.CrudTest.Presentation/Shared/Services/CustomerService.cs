@@ -13,8 +13,9 @@ namespace Mc2.CrudTest.Services
         ResultDto AddToCustomer(CustomerDto customer);
         ResultDto RemoveFromCustomer(long customerId);
         ResultDto<List<CustomerDto>> GetCustomers();
+        List<CustomerDto> GetCustomers2();
 
-        
+
     }
     public class CustomerService : ICustomerService
     {
@@ -53,6 +54,26 @@ namespace Mc2.CrudTest.Services
                 IsSuccess = false,
                 Message = "",
             };
+        }
+        public List<CustomerDto> GetCustomers2()
+        {
+            var customers = _context
+               .Customers
+               .ToList()
+               .Select(p => new CustomerDto
+               {
+                   Id = p.Id,
+                   Firstname = p.Firstname,
+                   Lastname = p.Lastname,
+                   BankAccountNumber = p.BankAccountNumber,
+                   DateOfBirth = p.DateOfBirth,
+                   Email = p.Email,
+                   PhoneNumber = p.PhoneNumber,
+
+               }
+               ).ToList();
+
+            return customers;
         }
 
         public ResultDto RemoveFromCustomer(long customerId)
