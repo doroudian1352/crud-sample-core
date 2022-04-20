@@ -1,8 +1,11 @@
+using Mc2.CrudTest.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Mc2.CrudTest.Services.Interfaces.Contexts;
 
 namespace Mc2.CrudTest.Presentation.Server
 {
@@ -22,9 +25,17 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+
+            
+            services.AddScoped<IDataBaseContext, DataBaseContext>();
+           // "Data Source=DESKTOP-CLQ20DE;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+            string contectionString = @"Data Source=DESKTOP-CLQ20DE; Initial Catalog=DbCrude; Integrated Security=True;";
+            services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(option => option.UseSqlServer(contectionString));
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runt   ime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

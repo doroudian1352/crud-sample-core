@@ -11,13 +11,13 @@ namespace Mc2.CrudTest.Domain.Generators
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
         
-        public static List<Customer> GenerateWeatherForecast()
+        public static List<WeatherForecast> GenerateWeatherForecast()
         {
             
             return Enumerable.Range(1, 15).Select((index) =>
                 {
                     Random rng = new();
-                    return new Customer()
+                    return new WeatherForecast()
                     {
                         Date = DateTime.Now.AddDays(index),
                         TemperatureC = rng.Next(-20, 55),

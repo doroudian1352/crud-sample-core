@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Mc2.CrudTest.Domain
+namespace Mc2.CrudTest.Services
 {
-    public class Customer
+    public class CustomerDto
     {
+        public long Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
 
@@ -13,7 +17,5 @@ namespace Mc2.CrudTest.Domain
 
         public string Email { get; set; }
         public string BankAccountNumber { get; set; }
-
-      
     }
 }

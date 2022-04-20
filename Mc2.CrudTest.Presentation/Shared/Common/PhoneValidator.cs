@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mc2.CrudTest.Shared.Common
+namespace Mc2.CrudTest.Common
 {
     public class PhoneValidator
     {
