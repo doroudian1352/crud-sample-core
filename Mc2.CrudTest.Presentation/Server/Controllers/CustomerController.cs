@@ -35,11 +35,19 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         }
 
         [HttpPost]
-        public ResultDto Add(CustomerDto customerDto)
+        public ResultDto<long> Add(CustomerDto customerDto)
         {
-            ResultDto response = _customerService.AddToCustomer(customerDto);
+            ResultDto<long> response = _customerService.AddToCustomer(customerDto);
             return response;
         }
+
+        [HttpDelete("{Id}")]
+        public ResultDto Delete(long Id)
+        {
+            ResultDto response = _customerService.RemoveFromCustomer(Id);
+            return response;
+        }
+
 
 
     }

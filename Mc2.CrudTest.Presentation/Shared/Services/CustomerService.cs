@@ -1,4 +1,5 @@
 ﻿using Mc2.CrudTest.Common;
+using Mc2.CrudTest.Domain;
 using Mc2.CrudTest.Services.Interfaces.Contexts;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Mc2.CrudTest.Services
 {
     public interface ICustomerService
     {
-        ResultDto AddToCustomer(CustomerDto customer);
+        ResultDto<long> AddToCustomer(CustomerDto customer);
         ResultDto RemoveFromCustomer(long customerId);
         ResultDto<List<CustomerDto>> GetCustomers();
         List<CustomerDto> GetCustomers2();
@@ -25,9 +26,27 @@ namespace Mc2.CrudTest.Services
             _context = context;
         }
 
-        public ResultDto AddToCustomer(CustomerDto customer)
+        public ResultDto<long> AddToCustomer(CustomerDto customer)
         {
-            throw new NotImplementedException();
+            Customer newCustomer = new Customer() {
+                Firstname=customer.Firstname,
+                Lastname=customer.Lastname,
+                BankAccountNumber=customer.BankAccountNumber,
+                PhoneNumber=customer.PhoneNumber,
+                Email=customer.Email,
+                IsRemoved=false,
+                DateOfBirth="1356/12/01",
+                InsertTime=DateTime.Today,
+            };
+            _context.Customers.Add(newCustomer);
+            _context.SaveChanges();
+            return new ResultDto<long>()
+            {
+                Data = newCustomer.Id ,
+                IsSuccess = true,
+                Message = "ثبت نام کاربر انجام شد",
+            };
+            
         }
 
         public ResultDto<List<CustomerDto>> GetCustomers()
@@ -59,6 +78,7 @@ namespace Mc2.CrudTest.Services
         {
             var customers = _context
                .Customers
+               .Where(cu=>cu.IsRemoved==false)
                .ToList()
                .Select(p => new CustomerDto
                {
@@ -78,7 +98,23 @@ namespace Mc2.CrudTest.Services
 
         public ResultDto RemoveFromCustomer(long customerId)
         {
-            throw new NotImplementedException();
+            Customer customer = _context.Customers.Find(customerId);
+            if (customer == null)
+            {
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "کاربر یافت نشد"
+                };
+            }
+            customer.RemoveTime = DateTime.Now;
+            customer.IsRemoved = true;
+            _context.SaveChanges();
+            return new ResultDto()
+            {
+                IsSuccess = true,
+                Message = "کاربر با موفقیت حذف شد"
+            };
         }
     }
 }

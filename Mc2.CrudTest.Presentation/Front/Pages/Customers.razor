@@ -1,20 +1,24 @@
 ﻿@page "/customers"
-    @using Mc2.CrudTest.Services
+@using Mc2.CrudTest.Services
 @inject HttpClient _http
+@using Newtonsoft.Json;
+@using Mc2.CrudTest.Common;
+@inject NavigationManager navigationManager;
 
 <h1>ManageCustomers</h1>
 
 <p> </p>
-<!--
 <div>
 
-<input class="form-control" type="text" @bind="_newCustomer.Firstname" placeholder="First Name" aria-label="default input example">
-<input class="form-control" type="text" @bind="_newCustomer.Lastname" placeholder="LastName Name" aria-label="default input example">
-<input class="form-control" type="text" @bind="_newCustomer.Email" placeholder="Email" aria-label="default input example">
-<input class="form-control" type="text" @bind="_newCustomer.PhoneNumber"placeholder="PhoneNumber" aria-label="default input example">
-<button type="button" @onclick="CustomerAdd" class="btn btn-primary">Save</button>
+
+    <input class="form-control" type="text" @bind="_newCustomer.Firstname" @bind:event="oninput" placeholder="First Name" aria-label="default input example">
+    <input class="form-control" type="text" @bind="_newCustomer.Lastname" @bind:event="oninput" placeholder="LastName Name" aria-label="default input example">
+    <input class="form-control" type="text" @bind="_newCustomer.Email" @bind:event="oninput" placeholder="Email" aria-label="default input example">
+    <input class="form-control" type="text" @bind="_newCustomer.BankAccountNumber" @bind:event="oninput" placeholder="BankAccountNumber" aria-label="default input example">
+    <input class="form-control" type="text" @bind="_newCustomer.PhoneNumber" @bind:event="oninput" placeholder="PhoneNumber" aria-label="default input example">
+    <button type="button" @onclick="CustomerAdd" class="btn btn-primary">Save</button>
+    <br />
 </div>
--->
 
 @if (_customers == null)
 {
@@ -28,29 +32,52 @@ else
             <th>Lastname</th>
             <th>Email</th>
             <th>PhoneNumber</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (CustomerDto customer in _customers)
         {
-<tr>
-    <td>@customer.Firstname</td>
-    <td>@customer.Lastname</td>
-    <td>@customer.Email</td>
-    <td>@customer.PhoneNumber</td>
-</tr>}
+        <tr>
+            <td>@customer.Firstname</td>
+            <td>@customer.Lastname</td>
+            <td>@customer.Email</td>
+            <td>@customer.PhoneNumber</td>
+            <td>
+                <button @onclick="@(e => Delete(customer.Id))">Delete</button>
+                <!--<button onclick="Delete(customer.Id)" />    -->
+            </td>
+
+        </tr>
+}
     </tbody>
 </table>}
 
-@code { private CustomerDto[] _customers;
-            private CustomerDto _newCustomer;
-            protected void CustomerAdd()
-            {
-                var a = _newCustomer;
-                a = null;
-            }
+@code { 
 
-            protected override async Task OnInitializedAsync()
-            {
-                _customers = await _http.GetFromJsonAsync<CustomerDto[]>("https://localhost:44315/api/customer/");
-            } }
+    private CustomerDto[] _customers;
+    private CustomerDto _newCustomer = new CustomerDto();
+    protected async Task CustomerAdd()
+    {
+        using var response = await _http.PostAsJsonAsync($"{navigationManager.BaseUri}api/customer/", _newCustomer);
+
+        // convert response data to JsonElement which can handle any JSON data
+        var data = await response.Content.ReadFromJsonAsync<ResultDto>();
+        /*
+        var serialized = JsonConvert.SerializeObject(_newCustomer);
+        var stringContent = new StringContent(serialized, Encoding.UTF8, "application/json");
+
+        var result = await _http.PostAsync($"{navigationManager.BaseUri}api/customer/Add", stringContent).ConfigureAwait(false);*/
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _customers = await _http.GetFromJsonAsync<CustomerDto[]>("https://localhost:44315/api/customer/");
+    }
+    protected async Task Delete(long Id)
+    {
+        using var response = await _http.DeleteAsync($"{navigationManager.BaseUri}api/customer/{Id}");
+        var data = await response.Content.ReadFromJsonAsync<ResultDto>();
+    }
+
+    }
