@@ -3,6 +3,7 @@ using Mc2.CrudTest.Persistence;
 using Mc2.CrudTest.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Mc2.CrudTest.VerfiyTests
@@ -76,7 +77,7 @@ namespace Mc2.CrudTest.VerfiyTests
         }
 
         [Fact]
-        public void NullDataTest()
+        public void TaskGetOkResult()
         {
             // Todo: Refer to readme.md 
             // Arrange
@@ -95,7 +96,7 @@ namespace Mc2.CrudTest.VerfiyTests
 
 
             //assert
-            Assert.NotNull(customers);
+            Assert.IsType<List<CustomerDto>>(customers);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Mc2.CrudTest.Presentation.Server
             services.AddScoped<ICustomerService, CustomerService>();
             // "Data Source=DESKTOP-CLQ20DE;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
            // services.AddEntityFrameworkSqlServer();
-            string contectionString = @"Data Source=DESKTOP-CLQ20DE; Initial Catalog=DbCrude; Integrated Security=True;";
+            string contectionString = @"Data Source=DESKTOP-CLQ20DE; Initial Catalog=DbCrudeFinal; Integrated Security=True;";
              services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(contectionString));
 
 

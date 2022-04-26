@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mc2.CrudTest.Persistence.Migrations
 {
-    public partial class Create : Migration
+    public partial class GeneratetableinnewDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,12 +13,12 @@ namespace Mc2.CrudTest.Persistence.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Firstname = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Lastname = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    DateOfBirth = table.Column<string>(type: "varchar(10)", nullable: true),
+                    Firstname = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Lastname = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    DateOfBirth = table.Column<string>(type: "varchar(10)", nullable: false),
                     RegionCode = table.Column<int>(type: "int", nullable: false),
                     PhoneNumber = table.Column<long>(type: "bigint", nullable: false),
-                    Email = table.Column<string>(type: "varchar(30)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     BankAccountNumber = table.Column<long>(type: "bigint", nullable: false),
                     InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -34,8 +34,7 @@ namespace Mc2.CrudTest.Persistence.Migrations
                 name: "IX_Customers_Email",
                 table: "Customers",
                 column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

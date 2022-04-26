@@ -30,13 +30,16 @@ namespace Mc2.CrudTest.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("DateOfBirth")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("InsertTime")
                         .HasColumnType("datetime2");
@@ -45,7 +48,8 @@ namespace Mc2.CrudTest.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("PhoneNumber")
                         .HasColumnType("bigint");
@@ -62,8 +66,7 @@ namespace Mc2.CrudTest.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
