@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mc2.CrudTest.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20220420190727_CreateDatabaseAndCustomer")]
-    partial class CreateDatabaseAndCustomer
+    [Migration("20220422014307_Create")]
+    partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,8 +28,8 @@ namespace Mc2.CrudTest.Persistence.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<string>("BankAccountNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("BankAccountNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("DateOfBirth")
                         .HasColumnType("nvarchar(max)");
@@ -49,8 +49,11 @@ namespace Mc2.CrudTest.Persistence.Migrations
                     b.Property<string>("Lastname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("PhoneNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RegionCode")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");

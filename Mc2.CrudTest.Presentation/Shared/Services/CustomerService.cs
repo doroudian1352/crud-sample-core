@@ -21,6 +21,7 @@ namespace Mc2.CrudTest.Services
     public class CustomerService : ICustomerService
     {
         private readonly IDataBaseContext _context;
+
         public CustomerService(IDataBaseContext context)
         {
             _context = context;
@@ -33,7 +34,8 @@ namespace Mc2.CrudTest.Services
                 Lastname=customer.Lastname,
                 BankAccountNumber=customer.BankAccountNumber,
                 PhoneNumber=customer.PhoneNumber,
-                Email=customer.Email,
+                RegionCode=customer.RegionCode,
+                Email =customer.Email,
                 IsRemoved=false,
                 DateOfBirth="1356/12/01",
                 InsertTime=DateTime.Today,
@@ -89,6 +91,7 @@ namespace Mc2.CrudTest.Services
                    DateOfBirth = p.DateOfBirth,
                    Email = p.Email,
                    PhoneNumber = p.PhoneNumber,
+                   RegionCode = p.RegionCode,
 
                }
                ).ToList();

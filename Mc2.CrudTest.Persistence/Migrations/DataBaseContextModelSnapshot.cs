@@ -26,17 +26,17 @@ namespace Mc2.CrudTest.Persistence.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<string>("BankAccountNumber")
-                        .HasColumnType("varchar(20)");
+                    b.Property<long>("BankAccountNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("DateOfBirth")
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("InsertTime")
                         .HasColumnType("datetime2");
@@ -45,10 +45,13 @@ namespace Mc2.CrudTest.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("varchar(15)");
+                    b.Property<long>("PhoneNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RegionCode")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
